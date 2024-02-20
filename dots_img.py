@@ -15,7 +15,6 @@ braille pattern dots由 0 ~ 8 个点构成，共 256 个字符，从 \\u2800 开
 
 
 import cv2 as cv
-import numpy as np
 import codecs
 import os
 
@@ -108,7 +107,7 @@ def generate_dots_img(img_name: str, txt_name: str, width_max: int) -> None:
 
     for i in range(0, height, 4):
         for j in range(0, width, 2):
-            dot_img = img_cut[i: i+4, j: j+3]
+            dot_img = img_cut[i: i+4, j: j+2]
             dot = generate_dot(dot_img)
             file.write(dot)
         file.write('\n')
@@ -116,7 +115,11 @@ def generate_dots_img(img_name: str, txt_name: str, width_max: int) -> None:
     file.close()
 
 
-def generate(img_width_max):
+def generate(img_width_max: int) -> None:
+    """
+    将 ./origin 文件夹下的图片转化为字符串图片，以 txt 格式保存在 ./resault 文件夹下。
+    @param img_width_max: 每行字符数量限制
+    """
     origin_imgs = os.listdir('./origin/')
     print(origin_imgs)
     for img in origin_imgs:
